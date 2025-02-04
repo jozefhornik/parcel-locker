@@ -4,6 +4,7 @@ import KeyShortcuts from '../components/KeyShortcuts'
 import Timer from '../components/Timer'
 import { useNavigate } from 'react-router'
 import { CompartmentId } from '../App'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     handleOpen: (id: CompartmentId) => void
@@ -22,6 +23,7 @@ export default function DeliveryFound(props: Props) {
     const [showMenu, setShowMenu] = useState(false)
 
     const n = useNavigate()
+    const { t } = useTranslation()
 
     const handleOpen = useCallback(() => {
         handleOpenExternal(deliveryCompartment)
@@ -69,10 +71,10 @@ export default function DeliveryFound(props: Props) {
             {!showMenu ? (
                 <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '48px', margin: '1px 0 0 0' }}>
-                        Výdaj zásielky
+                        {t('shipmentDelivery')}
                     </div>
                     <div style={{ fontSize: '36px', margin: '0 0 0 0' }}>
-                        Vyberte si zásielku a zatvorte, prosím, schránku
+                        {t('takeTheShipmentAndCloseCompartment')}
                     </div>
                     <div
                         style={{
@@ -90,19 +92,21 @@ export default function DeliveryFound(props: Props) {
                                 shortcuts={[
                                     {
                                         keyCode: 'A',
-                                        description:
-                                            'Potvrdiť vyzdvihnutie zásielky',
+                                        description: t(
+                                            'confirmShipmentDelivery'
+                                        ),
                                         action: handleAccept,
                                     },
                                     {
                                         keyCode: 'B',
-                                        description: 'Nahlásiť problém',
+                                        description: t('reportProblem'),
                                         action: () => setShowMenu(true),
                                     },
                                     {
                                         keyCode: 'C',
-                                        description:
-                                            'Otvoriť schránku, ak sa neotvorila',
+                                        description: t(
+                                            'openCompartmentIfDoesNotOpen'
+                                        ),
                                         action: handleOpen,
                                     },
                                 ]}
@@ -114,21 +118,23 @@ export default function DeliveryFound(props: Props) {
                                 shortcuts={[
                                     {
                                         keyCode: 'A',
-                                        description:
-                                            'Potvrdiť vyzdvihnutie zásielky',
+                                        description: t(
+                                            'confirmShipmentDelivery'
+                                        ),
                                         action: handleAccept,
                                     },
                                     {
                                         keyCode: 'B',
-                                        description: 'Nahlásiť problém',
+                                        description: t('reportProblem'),
                                         action: () => setShowMenu(true),
                                     },
                                     ...(reopenedTimes < maxReopenedTimes
                                         ? [
                                               {
                                                   keyCode: 'C',
-                                                  description:
-                                                      'Otvoriť opätovne schránku',
+                                                  description: t(
+                                                      'openCompartmentAgain'
+                                                  ),
                                                   action: handleReopen,
                                               },
                                           ]
@@ -150,7 +156,7 @@ export default function DeliveryFound(props: Props) {
                                 margin: '20px 0 0 0',
                             }}
                         >
-                            Nahláste problém so schránkou
+                            {t('reportProblem')}
                         </div>
 
                         <div style={{ marginTop: '20px' }}>
@@ -158,38 +164,41 @@ export default function DeliveryFound(props: Props) {
                                 shortcuts={[
                                     {
                                         keyCode: 'A',
-                                        description:
-                                            'Schránku nie je možné otvoriť',
+                                        description: t(
+                                            'compartmentCanNotBeOpened'
+                                        ),
                                         action: () => {
                                             handleError(true)
                                         },
                                     },
                                     {
                                         keyCode: 'B',
-                                        description:
-                                            'Schránku nie je možné zatvoriť',
+                                        description: t(
+                                            'compartmentCanNotBeClosed'
+                                        ),
                                         action: () => {
                                             handleError(false)
                                         },
                                     },
                                     {
                                         keyCode: 'C',
-                                        description: 'Schránka je prázdna',
+                                        description: t('compartmentIsEmpty'),
                                         action: () => {
                                             handleError(true)
                                         },
                                     },
                                     {
                                         keyCode: 'D',
-                                        description:
-                                            'Schránka obsahuje iný tovar',
+                                        description: t(
+                                            'compartmentContainsAnotherShipment'
+                                        ),
                                         action: () => {
                                             handleError(true)
                                         },
                                     },
                                     {
                                         keyCode: '#',
-                                        description: 'Návrat',
+                                        description: t('goBack'),
                                         action: () => {
                                             setShowMenu(false)
                                         },

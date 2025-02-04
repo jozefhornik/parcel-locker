@@ -6,9 +6,11 @@ import { createPortal } from 'react-dom'
 import Scanner from '../components/Scanner'
 import { useTimer } from 'react-timer-hook'
 import Loading from '../components/Loading'
+import { useTranslation } from 'react-i18next'
 
 export default function SendCustomer() {
     const n = useNavigate()
+    const { t } = useTranslation()
     const [expire] = useState<Date>(new Date(Date.now() + 120 * 1000))
     const [loadUrl, setLoadUrl] = useState<string | null>(null)
 
@@ -42,10 +44,10 @@ export default function SendCustomer() {
                 <>
                     <div style={{ textAlign: 'center' }}>
                         <div style={{ fontSize: '48px', margin: '30px 0 0 0' }}>
-                            Podanie zásielky
+                            {t('shipmentSend')}
                         </div>
                         <div style={{ fontSize: '36px', margin: '30px 0 0 0' }}>
-                            Naskenujte čiarový alebo QR kód zásielky
+                            {t('scanBarCodeOrQrCode')}
                         </div>
                         <div
                             style={{
@@ -56,7 +58,7 @@ export default function SendCustomer() {
                                 shortcuts={[
                                     {
                                         keyCode: 'A',
-                                        description: 'Ukončiť',
+                                        description: t('exit'),
                                         action: handleExit,
                                     },
                                 ]}

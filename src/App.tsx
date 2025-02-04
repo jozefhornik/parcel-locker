@@ -11,6 +11,7 @@ import InsertNotFound from './pages/InsertNotFound'
 import ReportProblem from './pages/ReportProblem'
 import DeliveryOk from './pages/DeliveryOk'
 import SendOk from './pages/SendOk'
+import { useTranslation } from 'react-i18next'
 
 export type CompartmentId = { column: number; row: number }
 
@@ -18,6 +19,8 @@ function App() {
     const [openCompartment, setOpenComparment] = useState<CompartmentId | null>(
         null
     )
+
+    const {t} = useTranslation()
 
     const handleOpen = useCallback((id: CompartmentId) => {
         setOpenComparment(id)
@@ -104,7 +107,7 @@ function App() {
                     textAlign: 'center',
                 }}
             >
-                Platný kód na vyzvihnutie: 123456, platná zásielka na podanie:
+                {t('validCodeForDelivery')}: 123456, {t('validCodeForSend')}:
                 20000123456.
             </div>
             <div
@@ -115,12 +118,12 @@ function App() {
                 }}
             >
                 <div>
-                    SCHRÁNKA JE: {openCompartment ? 'OTVORENÁ' : 'ZATVORENÁ'}
+                    {t('compartmentIs')}: {openCompartment ? t('open') : t('closed')}
                 </div>
                 {openCompartment ? (
                     <div style={{ marginTop: '20px' }}>
                         <button onClick={() => setOpenComparment(null)}>
-                            Zatvoriť
+                            {t('close')}
                         </button>
                     </div>
                 ) : null}

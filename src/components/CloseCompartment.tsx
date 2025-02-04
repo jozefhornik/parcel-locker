@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { CompartmentId } from '../App'
 import DefaultBox from './DefaultBox'
 
@@ -6,6 +7,8 @@ type Props = {
 }
 
 export default function CloseCompartment(props: Props) {
+    const { t } = useTranslation()
+
     const { openCompartment } = props
 
     return (
@@ -17,7 +20,7 @@ export default function CloseCompartment(props: Props) {
                     textAlign: 'center',
                 }}
             >
-                Prosíme, zatvorte otvorenú vyznačenú schránku
+                {t('pleaseCloseCompartment')}
             </div>
             <div
                 style={{

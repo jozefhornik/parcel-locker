@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Timer from '../components/Timer'
 import { CompartmentId } from '../App'
 import CloseCompartment from '../components/CloseCompartment'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     openCompartment: CompartmentId | null
@@ -11,6 +12,7 @@ type Props = {
 
 export default function DeliveryOk(props: Props) {
     const n = useNavigate()
+    const { t } = useTranslation()
     const [expire, setExpire] = useState<Date | null>(null)
 
     const handleExit = useCallback(() => {
@@ -39,9 +41,11 @@ export default function DeliveryOk(props: Props) {
                     }}
                 >
                     <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '48px' }}>Výdaj zásielky</div>
+                        <div style={{ fontSize: '48px' }}>
+                            {t('shipmentDelivery')}
+                        </div>
                         <div style={{ fontSize: '36px', margin: '2px 0 0 0' }}>
-                            Ďakujeme za vyzdvihnutie zásielky
+                            {t('thankYouForCollection')}
                         </div>
                         <div
                             style={{
@@ -52,7 +56,7 @@ export default function DeliveryOk(props: Props) {
                                 shortcuts={[
                                     {
                                         keyCode: 'A',
-                                        description: 'Ukončiť',
+                                        description: t('exit'),
                                         action: handleExit,
                                     },
                                 ]}

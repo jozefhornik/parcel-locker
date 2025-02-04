@@ -6,6 +6,7 @@ import { CompartmentId } from '../App'
 import CloseCompartment from '../components/CloseCompartment'
 import { useTimer } from 'react-timer-hook'
 import Loading from '../components/Loading'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     openCompartment: CompartmentId | null
@@ -34,6 +35,7 @@ export default function MainPage(props: Props) {
     }, [loadUrl, restart])
 
     const n = useNavigate()
+    const { t } = useTranslation()
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -90,7 +92,7 @@ export default function MainPage(props: Props) {
                                         margin: '30px 0 0 0',
                                     }}
                                 >
-                                    Výdaj zásielok
+                                    {t('shipmentDelivery')}
                                 </div>
                                 <div
                                     style={{
@@ -98,7 +100,7 @@ export default function MainPage(props: Props) {
                                         margin: '30px 0 0 0',
                                     }}
                                 >
-                                    Zadajte kód pre vydanie zásielky a stlačte #
+                                    {t('enterShipmentCodeAndPressHash')}
                                 </div>
                                 <div
                                     style={{
@@ -120,17 +122,17 @@ export default function MainPage(props: Props) {
                                     shortcuts={[
                                         {
                                             keyCode: 'A',
-                                            description: 'Vyčistiť kód',
+                                            description: t('clearCode'),
                                             action: () => setNumber(''),
                                         },
                                         {
                                             keyCode: 'B',
-                                            description: 'Odoslať zásielku',
+                                            description: t('sendShipment'),
                                             action: () => n('/send'),
                                         },
                                         {
                                             keyCode: 'C',
-                                            description: 'Obsluha',
+                                            description: t('serviceMenu'),
                                             action: () => setNumber(''),
                                         },
                                     ]}

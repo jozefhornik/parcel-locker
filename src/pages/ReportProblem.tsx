@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router'
 import KeyShortcuts from '../components/KeyShortcuts'
 import { useCallback, useState } from 'react'
 import Timer from '../components/Timer'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     contact?: boolean
@@ -9,6 +10,7 @@ type Props = {
 
 export default function ReportProblem(props: Props) {
     const n = useNavigate()
+    const { t } = useTranslation()
     const [expire] = useState<Date>(new Date(Date.now() + 60 * 1000))
 
     const handleExit = useCallback(() => {
@@ -21,12 +23,11 @@ export default function ReportProblem(props: Props) {
         <>
             <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '48px', margin: '30px 0 0 0' }}>
-                    Ďakujeme za nahlásenie problému
+                    {t('thankYouForReporting')}
                 </div>
                 {contact ? (
                     <div style={{ fontSize: '24px', margin: '10px 0 0 0' }}>
-                        Budeme Vás konktaktovať s návrhom riešenia vzniknutej
-                        situácie
+                        {t('weWillContactYouSoon')}
                     </div>
                 ) : null}
                 <div
@@ -38,7 +39,7 @@ export default function ReportProblem(props: Props) {
                         shortcuts={[
                             {
                                 keyCode: 'A',
-                                description: 'Ukončiť',
+                                description: t('exit'),
                                 action: handleExit,
                             },
                         ]}

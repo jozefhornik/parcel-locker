@@ -5,6 +5,7 @@ import Timer from '../components/Timer'
 import DefaultBox from '../components/DefaultBox'
 import { CompartmentId } from '../App'
 import CloseCompartment from '../components/CloseCompartment'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     handleOpen: (id: CompartmentId) => void
@@ -39,6 +40,7 @@ export default function InsertFound(props: Props) {
     const { handleOpen: handleOpen, openCompartment } = props
     const [expire, setExpire] = useState<Date | null>(null)
     const n = useNavigate()
+    const { t } = useTranslation()
     const [showMenu, setShowMenu] = useState(false)
     const [currentCompartment, setCurrentCompartment] =
         useState<CompartmentId | null>(availableCompartments[0][0])
@@ -175,8 +177,7 @@ export default function InsertFound(props: Props) {
                                                 margin: '20px 0 0 0',
                                             }}
                                         >
-                                            Vložte zásielku do vyznačenej
-                                            schránky
+                                            {t('insertShipmentToCompartment')}
                                         </div>
                                         <div
                                             style={{
@@ -198,26 +199,29 @@ export default function InsertFound(props: Props) {
                                                 shortcuts={[
                                                     {
                                                         keyCode: 'A',
-                                                        description:
-                                                            'Potvrdiť podanie zásielky',
+                                                        description: t(
+                                                            'confirmShipmentSend'
+                                                        ),
                                                         action: handleAccept,
                                                     },
                                                     {
                                                         keyCode: 'B',
-                                                        description:
-                                                            'Schránku nie je možné použiť',
+                                                        description: t(
+                                                            'compartmentCanNotBeUsed'
+                                                        ),
                                                         action: () =>
                                                             setShowMenu(true),
                                                     },
                                                     {
                                                         keyCode: 'C',
-                                                        description:
-                                                            'Otvoriť schránku, ak sa neotvorila',
+                                                        description: t(
+                                                            'openCompartmentIfDoesNotOpen'
+                                                        ),
                                                         action: handleReopen,
                                                     },
                                                     {
                                                         keyCode: 'D',
-                                                        description: 'Ukončiť',
+                                                        description: t('exit'),
                                                         action: handleExit,
                                                     },
                                                 ]}
@@ -232,7 +236,7 @@ export default function InsertFound(props: Props) {
                                                 margin: '20px 0 0 0',
                                             }}
                                         >
-                                            Podaj zásielky
+                                            {t('shipomentSend')}
                                         </div>
                                         <div
                                             style={{
@@ -243,20 +247,22 @@ export default function InsertFound(props: Props) {
                                                 shortcuts={[
                                                     {
                                                         keyCode: 'A',
-                                                        description:
-                                                            'Potvrdiť podanie zásielky',
+                                                        description: t(
+                                                            'confirmShipmentSend'
+                                                        ),
                                                         action: handleAccept,
                                                     },
                                                     {
                                                         keyCode: 'B',
-                                                        description:
-                                                            'Schránku nie je možné použiť',
+                                                        description: t(
+                                                            'compartmentCanNotBeUsed'
+                                                        ),
                                                         action: () =>
                                                             setShowMenu(true),
                                                     },
                                                     {
                                                         keyCode: 'C',
-                                                        description: 'Ukončiť',
+                                                        description: t('exit'),
                                                         action: handleExit,
                                                     },
                                                 ]}
@@ -278,7 +284,7 @@ export default function InsertFound(props: Props) {
                                         margin: '20px 0 0 0',
                                     }}
                                 >
-                                    Schránku nie je možné použiť
+                                    {t('compartmentCanNotBeUsed')}
                                 </div>
 
                                 <div style={{ marginTop: '20px' }}>
@@ -286,8 +292,9 @@ export default function InsertFound(props: Props) {
                                         shortcuts={[
                                             {
                                                 keyCode: 'A',
-                                                description:
-                                                    'Schránka je príliš malá pre zásielku',
+                                                description: t(
+                                                    'compartmentIsTooSmall'
+                                                ),
                                                 action: () => {
                                                     handleNotFit()
                                                     setShowMenu(false)
@@ -296,7 +303,7 @@ export default function InsertFound(props: Props) {
                                             {
                                                 keyCode: 'B',
                                                 description:
-                                                    'Schránka je znečistená',
+                                                    t('compartmentIsDirty'),
                                                 action: () => {
                                                     handleNotUsable()
                                                     setShowMenu(false)
@@ -304,8 +311,9 @@ export default function InsertFound(props: Props) {
                                             },
                                             {
                                                 keyCode: 'C',
-                                                description:
-                                                    'Schránku nie je možné otvoriť / zavrieť',
+                                                description: t(
+                                                    'compartmentIsBroken'
+                                                ),
                                                 action: () => {
                                                     handleNotUsable()
                                                     setShowMenu(false)
@@ -313,7 +321,7 @@ export default function InsertFound(props: Props) {
                                             },
                                             {
                                                 keyCode: 'D',
-                                                description: 'Návrat',
+                                                description: t('goBack'),
                                                 action: () => {
                                                     setShowMenu(false)
                                                 },

@@ -2,9 +2,11 @@ import { useNavigate, useParams } from 'react-router'
 import KeyShortcuts from '../components/KeyShortcuts'
 import { useCallback, useState } from 'react'
 import Timer from '../components/Timer'
+import { useTranslation } from 'react-i18next'
 
 export default function InsertNotFound() {
     const n = useNavigate()
+    const { t } = useTranslation()
     const [expire] = useState<Date>(new Date(Date.now() + 60 * 1000))
 
     const { number } = useParams()
@@ -17,10 +19,10 @@ export default function InsertNotFound() {
         <>
             <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '48px', margin: '30px 0 0 0' }}>
-                    Podaj zásielky
+                    {t('shipmentSend')}
                 </div>
                 <div style={{ fontSize: '36px', margin: '2px 0 0 0' }}>
-                    Zásielka nebola nájdená, skontrolujte jej číslo
+                    {t('shipmentWasNotFoundVerifyNumber')}
                 </div>
                 <div
                     style={{
@@ -40,7 +42,7 @@ export default function InsertNotFound() {
                         shortcuts={[
                             {
                                 keyCode: 'A',
-                                description: 'Ukončiť',
+                                description: t('exit'),
                                 action: handleExit,
                             },
                         ]}

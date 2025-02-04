@@ -2,10 +2,12 @@ import { useNavigate, useParams } from 'react-router'
 import KeyShortcuts from '../components/KeyShortcuts'
 import { useCallback, useState } from 'react'
 import Timer from '../components/Timer'
+import { useTranslation } from 'react-i18next'
 
 export default function DeliveryFailed() {
     const n = useNavigate()
     const [expire] = useState<Date>(new Date(Date.now() + 20 * 1000))
+    const { t } = useTranslation()
 
     const { number } = useParams()
 
@@ -17,10 +19,10 @@ export default function DeliveryFailed() {
         <>
             <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '48px', margin: '30px 0 0 0' }}>
-                    Výdaj zásielky
+                    {t('shipmentDelivery')}
                 </div>
                 <div style={{ fontSize: '36px', margin: '2px 0 0 0' }}>
-                    Kód zásielky nebol zadaný nesprávne
+                    {t('enteredCodeIsNotValid')}
                 </div>
                 <div
                     style={{
@@ -40,7 +42,7 @@ export default function DeliveryFailed() {
                         shortcuts={[
                             {
                                 keyCode: 'A',
-                                description: 'Ukončiť',
+                                description: t('exit'),
                                 action: handleExit,
                             },
                         ]}

@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next'
+
 export default function Loading() {
+    const { t } = useTranslation()
+
     return (
         <div
             style={{
@@ -14,7 +18,7 @@ export default function Loading() {
                     textAlign: 'center',
                 }}
             >
-                Prebieha načítavanie údajov....
+                {t('loading')}
             </div>
         </div>
     )
