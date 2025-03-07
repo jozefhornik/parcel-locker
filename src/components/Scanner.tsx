@@ -1,8 +1,9 @@
+import { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 
 type Props = {
     handleScan: (number: string) => void
-}
+} & PropsWithChildren
 
 export default function Scanner(props: Props) {
     const { handleScan } = props

@@ -7,6 +7,8 @@ import CloseCompartment from '../components/CloseCompartment'
 import { useTimer } from 'react-timer-hook'
 import Loading from '../components/Loading'
 import { useTranslation } from 'react-i18next'
+import Scanner from '../components/Scanner'
+import { createPortal } from 'react-dom'
 
 type Props = {
     openCompartment: CompartmentId | null
@@ -69,11 +71,13 @@ export default function MainPage(props: Props) {
                 setExpire(null)
             }
         } else {
-            if (expire == null) {
+            if (expire === null) {
                 setExpire(new Date(Date.now() + 120 * 1000))
             }
         }
     }, [expire, number])
+
+    const scannerRoot = document.getElementById('scanner')
 
     return (
         <>
@@ -89,59 +93,110 @@ export default function MainPage(props: Props) {
                                 <div
                                     style={{
                                         fontSize: '48px',
-                                        margin: '30px 0 0 0',
+                                        margin: '10px 0 0 0',
                                     }}
                                 >
-                                    {t('shipmentDelivery')}
+                                    DEPO
+                                </div>
+                            </div>
+
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        padding: '0 10px 0 20px',
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            fontSize: '28px',
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        {t('shipmentDelivery')}
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize: '24px',
+                                            margin: '10px 0 0 0',
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        {t('enterShipmentCodeAndPressHash')}
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize: '36px',
+                                            margin: '30px auto 0 auto',
+                                            border: '5px solid #ccc',
+                                            padding: '10px',
+                                            width: '200px',
+                                            lineHeight: '40px',
+                                            height: '40px',
+                                            textAlign: 'left',
+                                        }}
+                                    >
+                                        {number}
+                                    </div>
+
+                                    <div style={{ margin: '20px 0 0 0' }}>
+                                        <KeyShortcuts
+                                            shortcuts={[
+                                                {
+                                                    keyCode: 'A',
+                                                    description: t('clearCode'),
+                                                    action: () => setNumber(''),
+                                                },
+                                                {
+                                                    keyCode: 'B',
+                                                    description:
+                                                        t('sendShipment'),
+                                                    action: () => n('/send'),
+                                                },
+                                                {
+                                                    keyCode: 'C',
+                                                    description:
+                                                        t('serviceMenu'),
+                                                    action: () =>
+                                                        n('/courier/login'),
+                                                },
+                                            ]}
+                                        />
+                                    </div>
                                 </div>
                                 <div
                                     style={{
-                                        fontSize: '36px',
-                                        margin: '30px 0 0 0',
+                                        padding: '0 20px 0 10px',
+                                        textAlign: 'center',
+                                        borderLeft: '2px dashed #000',
                                     }}
                                 >
-                                    {t('enterShipmentCodeAndPressHash')}
-                                </div>
-                                <div
-                                    style={{
-                                        fontSize: '36px',
-                                        margin: '30px auto 0 auto',
-                                        border: '5px solid #ccc',
-                                        padding: '10px',
-                                        width: '200px',
-                                        lineHeight: '40px',
-                                        height: '40px',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    {number}
+                                    <div
+                                        style={{
+                                            fontSize: '28px',
+                                        }}
+                                    >
+                                        {t('shipmentSend')}
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize: '24px',
+                                            margin: '10px 0 0 0',
+                                        }}
+                                    >
+                                        {t('scanBarCodeOrQrCode')}
+                                    </div>
                                 </div>
                             </div>
-                            <div style={{ margin: '20px 0 0 0' }}>
-                                <KeyShortcuts
-                                    shortcuts={[
-                                        {
-                                            keyCode: 'A',
-                                            description: t('clearCode'),
-                                            action: () => setNumber(''),
-                                        },
-                                        {
-                                            keyCode: 'B',
-                                            description: t('sendShipment'),
-                                            action: () => n('/send'),
-                                        },
-                                        {
-                                            keyCode: 'C',
-                                            description: t('serviceMenu'),
-                                            action: () => setNumber(''),
-                                        },
-                                    ]}
-                                />
-                            </div>
+
                             {expire != null ? (
                                 <Timer
                                     expire={expire}
-                                    callback={() => setNumber('')}
+                                    callback={() => n('/')}
                                     shouldBeVisible={() =>
                                         expire.getTime() -
                                             new Date().getTime() <=
@@ -149,6 +204,26 @@ export default function MainPage(props: Props) {
                                     }
                                 />
                             ) : null}
+
+                            {scannerRoot
+                                ? createPortal(
+                                      <Scanner
+                                          handleScan={(number) => {
+                                              if (number === '20000123456') {
+                                                  setLoadUrl(
+                                                      '/insert-ok/' + number
+                                                  )
+                                              } else {
+                                                  setLoadUrl(
+                                                      '/insert-not-found/' +
+                                                          number
+                                                  )
+                                              }
+                                          }}
+                                      />,
+                                      scannerRoot
+                                  )
+                                : null}
                         </>
                     )}
                 </>

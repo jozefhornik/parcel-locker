@@ -12,6 +12,14 @@ import ReportProblem from './pages/ReportProblem'
 import DeliveryOk from './pages/DeliveryOk'
 import SendOk from './pages/SendOk'
 import { useTranslation } from 'react-i18next'
+import ScreenOff from './pages/ScreenOff'
+import CourierLogin from './pages/CourierLogin'
+import CourierNotFound from './pages/CourierNotFound'
+import CourierValid from './pages/CourierValid'
+import { CourierContext, CourierContextType } from './Contexts'
+import CourierDeliver from './pages/CourierDeliver'
+import CourierNoFreeCompartment from './pages/CourierNoFreeCompartment'
+import CourierShipmentNotFound from './pages/CourierShipmentNotFound'
 
 export type CompartmentId = { column: number; row: number }
 
@@ -20,7 +28,11 @@ function App() {
         null
     )
 
-    const {t} = useTranslation()
+    const [courierData, setCourierData] = useState<CourierContextType>({
+        undelivered: [],
+    })
+
+    const { t } = useTranslation()
 
     const handleOpen = useCallback((id: CompartmentId) => {
         setOpenComparment(id)
@@ -38,67 +50,116 @@ function App() {
                     position: 'relative',
                 }}
             >
-                <BrowserRouter basename="/pl/">
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <MainPage openCompartment={openCompartment} />
-                            }
-                        />
-                        <Route
-                            path="/delivery-ok/:number"
-                            element={
-                                <DeliveryFound
-                                    handleOpen={handleOpen}
-                                    openCompartment={openCompartment}
-                                />
-                            }
-                        />
-                        <Route
-                            path="/delivery-failed/:number"
-                            element={<DeliveryFailed />}
-                        />
-                        <Route
-                            path="/insert-ok/:number"
-                            element={
-                                <InsertFound
-                                    handleOpen={handleOpen}
-                                    openCompartment={openCompartment}
-                                />
-                            }
-                        />
-                        <Route
-                            path="/insert-not-found/:number"
-                            element={<InsertNotFound />}
-                        />
-                        <Route
-                            path="/no-free-compartment"
-                            element={<NoFreeCompartment />}
-                        />
-                        <Route path="/send" element={<SendCustomer />} />
-                        <Route
-                            path="/report-problem/contact"
-                            element={<ReportProblem contact />}
-                        />
-                        <Route
-                            path="/report-problem/no-contact"
-                            element={<ReportProblem />}
-                        />
-                        <Route
-                            path="/send-ok"
-                            element={
-                                <SendOk openCompartment={openCompartment} />
-                            }
-                        />
-                        <Route
-                            path="/delivery-ok"
-                            element={
-                                <DeliveryOk openCompartment={openCompartment} />
-                            }
-                        />
-                    </Routes>
-                </BrowserRouter>
+                <CourierContext.Provider
+                    value={{
+                        value: courierData,
+                        setValue: setCourierData,
+                    }}
+                >
+                    <BrowserRouter basename="/pl/">
+                        <Routes>
+                            <Route path="/" element={<ScreenOff />} />
+
+                            <Route
+                                path="/default"
+                                element={
+                                    <MainPage
+                                        openCompartment={openCompartment}
+                                    />
+                                }
+                            />
+
+                            <Route
+                                path="/delivery-ok/:number"
+                                element={
+                                    <DeliveryFound
+                                        handleOpen={handleOpen}
+                                        openCompartment={openCompartment}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/delivery-failed/:number"
+                                element={<DeliveryFailed />}
+                            />
+                            <Route
+                                path="/insert-ok/:number"
+                                element={
+                                    <InsertFound
+                                        handleOpen={handleOpen}
+                                        openCompartment={openCompartment}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/insert-not-found/:number"
+                                element={<InsertNotFound />}
+                            />
+                            <Route
+                                path="/no-free-compartment"
+                                element={<NoFreeCompartment />}
+                            />
+                            <Route path="/send" element={<SendCustomer />} />
+                            <Route
+                                path="/report-problem/contact"
+                                element={<ReportProblem contact />}
+                            />
+                            <Route
+                                path="/report-problem/no-contact"
+                                element={<ReportProblem />}
+                            />
+                            <Route
+                                path="/send-ok"
+                                element={
+                                    <SendOk openCompartment={openCompartment} />
+                                }
+                            />
+                            <Route
+                                path="/delivery-ok"
+                                element={
+                                    <DeliveryOk
+                                        openCompartment={openCompartment}
+                                    />
+                                }
+                            />
+
+                            <Route
+                                path="/courier/login"
+                                element={<CourierLogin />}
+                            />
+                            <Route
+                                path="/courier/not-found"
+                                element={<CourierNotFound />}
+                            />
+                            <Route
+                                path="/courier/valid"
+                                element={
+                                    <CourierValid
+                                        openCompartment={openCompartment}
+                                        handleOpen={handleOpen}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/courier/deliver"
+                                element={
+                                    <CourierDeliver
+                                        openCompartment={openCompartment}
+                                        handleOpen={handleOpen}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/courier/no-free-compartment"
+                                element={<CourierNoFreeCompartment />}
+                            />
+                            <Route
+                                path="/courier/shipment-not-found"
+                                element={<CourierShipmentNotFound />}
+                            />
+                        </Routes>
+                    </BrowserRouter>
+                </CourierContext.Provider>
             </div>
             <div
                 style={{
@@ -108,7 +169,8 @@ function App() {
                 }}
             >
                 {t('validCodeForDelivery')}: 123456, {t('validCodeForSend')}:
-                20000123456.
+                20000123456, {t('validShipmentCodeForCourierInsert')}:
+                13212313245, {t('validCourierLogin')}: 1234
             </div>
             <div
                 style={{
@@ -118,7 +180,8 @@ function App() {
                 }}
             >
                 <div>
-                    {t('compartmentIs')}: {openCompartment ? t('open') : t('closed')}
+                    {t('compartmentIs')}:{' '}
+                    {openCompartment ? t('open') : t('closed')}
                 </div>
                 {openCompartment ? (
                     <div style={{ marginTop: '20px' }}>

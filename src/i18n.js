@@ -34,7 +34,7 @@ const resources = {
             noFreeCompartment: 'There is no free suitable compartment',
             enterShipmentCodeAndPressHash:
                 'Enter the code for pickup and press #',
-            serviceMenu: 'Service menu',
+            serviceMenu: 'Courier login',
             sendShipment: 'Send shipment',
             clearCode: 'Clear code',
             insertShipmentToCompartment:
@@ -51,6 +51,24 @@ const resources = {
             open: 'Open',
             closed: 'Closed',
             close: 'Close',
+            screenIsOffPressAnyKey: 'Screen is off, press any key to turn on',
+
+            courierLogin: 'Courier login',
+            scanYourQrCode: 'Scan your QR code',
+            courierLoginWasNotValid: 'Courier login was not valid',
+            courier: 'Courier',
+            undeliveredShipments: 'Undelivered shipments',
+            beforeInsertingNewShipmentsAllUndeliveredMustBeTaken:
+                'Before inserting new shipments, all undelivered shipments must be taken',
+            openFirstCompartmentForTake: 'Open first compartment for take',
+            scanTakenShipmentForControl: 'Scan taken shipment for control',
+            openComparmentAgain: 'Open compartment again',
+            numberCanNotBeScanned: 'Number can not be scanned',
+            scanShipmentNumberForInsert: 'Scan shipment number for insert',
+            validShipmentCodeForCourierInsert:
+                'Valid shipment code for courier insert',
+            validCourierLogin: 'Valid courier login',
+            confirmShipmentInsert: 'Confirm shipment insert',
         },
     },
     sk: {
@@ -85,7 +103,7 @@ const resources = {
             noFreeCompartment: 'Nie je voľný žiadny vhodný box',
             enterShipmentCodeAndPressHash:
                 'Zadajte kód pre vydanie zásielky a stlačte #',
-            serviceMenu: 'Obsluha',
+            serviceMenu: 'Prihlásenie kuriéra',
             sendShipment: 'Odoslať zásielku',
             clearCode: 'Vyčistiť kód',
             insertShipmentToCompartment:
@@ -102,6 +120,27 @@ const resources = {
             open: 'Otvorená',
             closed: 'Zatvorená',
             close: 'Zatvoriť',
+            screenIsOffPressAnyKey:
+                'Obrazovka je vypnutá, stlačte ľubovolnú klávesu pre zapnutie',
+
+            courierLogin: 'Prihlásenie kuriéra',
+            scanYourQrCode: 'Naskenujte Váš QR kód',
+            courierLoginWasNotValid: 'Prihlásenie kuriéra nebolo úspešné',
+            courier: 'Kuriér',
+            undeliveredShipments: 'Nevyzdvihnuté zásielky',
+            beforeInsertingNewShipmentsAllUndeliveredMustBeTaken:
+                'Pred vložením nových zásielok je potrebné vyzdvihnúť všetky exspirované zásielky',
+            openFirstCompartmentForTake:
+                'Otvoriť prvú schránku pre vyzdvihnutie',
+            scanTakenShipmentForControl: 'Naskenujte vyzdvihnutú zásielku',
+            openComparmentAgain: 'Otvoriť schránku opätovne',
+            numberCanNotBeScanned: 'Číslo nie je možné naskenovať',
+            scanShipmentNumberForInsert:
+                'Naskenujte číslo zásielky pre vloženie',
+            validShipmentCodeForCourierInsert:
+                'Platný kód zásielky pre vloženie',
+            validCourierLogin: 'Platné prihlásenie kuriéra',
+            confirmShipmentInsert: 'Potvrdiť vloženie zásielky',
         },
     },
 }
